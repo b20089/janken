@@ -12,32 +12,57 @@
   <h1>Janken Game!!</h1>
 
 
-
+  <!--
   <div th:if="${entry}">
     エントリー
     <ul>
-      <!--eachは所謂for each．この場合roomオブジェクトのusersフィールドにあるすべてのデータを一通り表示する
-          thが指定されているので[]が不要になる-->
+      eachは所謂for each．この場合roomオブジェクトのusersフィールドにあるすべてのデータを一通り表示する
+          thが指定されているので[]が不要になる
       <li th:each="user : ${entry.users}">[[${user}]]</li>
     </ul>
   </div>
-
+-->
+  <p>
+  <div th:if="${username}">
+    Hi [[${username}]]
+  </div>
+  </p>
+  
   <p th:if="${users}"></p>
+  <h2>エントリー</h2>
   <!--statはステータス変数
           https://www.ne.jp/asahi/hishidama/home/tech/java/spring/boot/thymeleaf/th_each.html
         -->
   <div th:each="users,stat:${users}">
     <tr>
-      <td>Index:[[${stat.index}]]</td>
+      <!--<td>Index:[[${stat.index}]]</td>
       <td>ID:[[${users.id}]]</td>
-      <td>ユーザ名:[[${users.name}]]</td>
+      -->
+      <li><a th:href="@{/match(id=${users.id})}">[[${users.name}]]</a></li>
+    </tr>
+  </div>
+  </p>
+
+  <p th:if="${matches}"></p>
+  <h2>試合結果</h2>
+  <!--statはステータス変数
+                      https://www.ne.jp/asahi/hishidama/home/tech/java/spring/boot/thymeleaf/th_each.html
+                    -->
+  <div th:each="matches,stat:${matches}">
+    <tr>
+      <td>Index:[[${stat.index}]]</td>
+      <td>ID:[[${matches.id}]]</td>
+      <td>ユーザ1:[[${matches.user1}]]</td>
+      <td>ユーザ2:[[${matches.user2}]]</td>
+      <td>ユーザ1の手:[[${matches.user1Hand}]]</td>
+      <td>ユーザ2の手:[[${matches.user2Hand}]]</td>
     </tr>
   </div>
   </p>
 
 
-  <!--
-    <p>
+
+  <!--    <p>
         <div th:if="${username}">
             Hi [[${username}]]
         </div>
@@ -65,21 +90,7 @@
     <p>
       結果 [[${result}]]
     </p>
-    <p th:if="${matches}"></p>
-    <!--statはステータス変数
-                https://www.ne.jp/asahi/hishidama/home/tech/java/spring/boot/thymeleaf/th_each.html
-              -->
-    <div th:each="matches,stat:${matches}">
-      <tr>
-        <td>Index:[[${stat.index}]]</td>
-        <td>ID:[[${matches.id}]]</td>
-        <td>ユーザ1:[[${matches.user1}]]</td>
-        <td>ユーザ2:[[${matches.user2}]]</td>
-        <td>ユーザ1の手:[[${matches.user1Hand}]]</td>
-        <td>ユーザ2の手:[[${matches.user2Hand}]]</td>
-      </tr>
-    </div>
-    </p>
+
   </div>
 
 

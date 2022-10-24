@@ -107,11 +107,30 @@ public class JankenController {
     String loginUser = prin.getName();
     this.entry.addUser(loginUser);
     model.addAttribute("entry", this.entry);
+    model.addAttribute("username", loginUser);
 
     ArrayList<User> users = userMapper.selectAllByUsers();
     model.addAttribute("users", users);
 
     return "janken.html";
+  }
+
+  /**
+   * PQueryParameterにidを与えることで対戦相手を特定するので，UserMapperにidを利用してUserオブジェクトを取得するメソッドを追加する
+   *
+   * @param id
+   * @param model Thymeleafにわたすデータを保持するオブジェクト
+   * @param prin
+   * @return
+   */
+  @GetMapping("/match")
+  public String matchJanken(@RequestParam Integer id, ModelMap model, Principal prin) {
+    User aite = userMapper.selectById(id);
+
+    model.addAttribute("aite", aite);
+    model.addAttribute("username", prin.getName());
+
+    return "match.html";
   }
 
 }
