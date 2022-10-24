@@ -22,6 +22,19 @@
     </ul>
   </div>
 
+  <p th:if="${users}"></p>
+  <!--statはステータス変数
+          https://www.ne.jp/asahi/hishidama/home/tech/java/spring/boot/thymeleaf/th_each.html
+        -->
+  <div th:each="users,stat:${users}">
+    <tr>
+      <td>Index:[[${stat.index}]]</td>
+      <td>ID:[[${users.id}]]</td>
+      <td>ユーザ名:[[${users.name}]]</td>
+    </tr>
+  </div>
+  </p>
+
 
   <!--
     <p>
@@ -51,6 +64,21 @@
     </p>
     <p>
       結果 [[${result}]]
+    </p>
+    <p th:if="${matches}"></p>
+    <!--statはステータス変数
+                https://www.ne.jp/asahi/hishidama/home/tech/java/spring/boot/thymeleaf/th_each.html
+              -->
+    <div th:each="matches,stat:${matches}">
+      <tr>
+        <td>Index:[[${stat.index}]]</td>
+        <td>ID:[[${matches.id}]]</td>
+        <td>ユーザ1:[[${matches.user1}]]</td>
+        <td>ユーザ2:[[${matches.user2}]]</td>
+        <td>ユーザ1の手:[[${matches.user1Hand}]]</td>
+        <td>ユーザ2の手:[[${matches.user2Hand}]]</td>
+      </tr>
+    </div>
     </p>
   </div>
 
