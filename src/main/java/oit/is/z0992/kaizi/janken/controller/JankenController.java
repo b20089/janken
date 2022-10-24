@@ -112,6 +112,9 @@ public class JankenController {
     ArrayList<User> users = userMapper.selectAllByUsers();
     model.addAttribute("users", users);
 
+    ArrayList<Match> matches = matchMapper.selectAllByMatches();
+    model.addAttribute("matches", matches);
+
     return "janken.html";
   }
 
@@ -124,7 +127,7 @@ public class JankenController {
    * @return
    */
   @GetMapping("/match")
-  public String matchJanken(@RequestParam Integer id, ModelMap model, Principal prin) {
+  public String match(@RequestParam Integer id, ModelMap model, Principal prin) {
     User aite = userMapper.selectById(id);
 
     model.addAttribute("aite", aite);
@@ -133,4 +136,36 @@ public class JankenController {
     return "match.html";
   }
 
+  @GetMapping("/fight") // @GetMapper(“/fight”)がわかりません
+  public String matchJanken(@RequestParam Integer param1, ModelMap model, Principal prin) {
+    // グー：１，チョキ：２，パー：３
+    String te = null, result = null;
+    if (param1 == 1) {
+      te = "Gu";
+      result = "draw...";
+    } else if (param1 == 2) {
+      te = "Choki";
+      result = "You Lose...";
+    } else if (param1 == 3) {
+      te = "Pa";
+      result = "You Win!";
+    }
+    // 使いまわしのプログラムから抜き出してinsertしたい
+    // ここで値を登録するとthymeleafが受け取り，htmlで処理することができるようになる
+    model.addAttribute("te", te);
+    model.addAttribute("result", result);
+    User jibun = userMapper.selectByName(prin.getName());
+    Match match = new Match();
+    match.setUser1(jibun.getId());
+    match.setUser2(1);// CPU
+    match.setUser1Hand(te);
+    match.setUser2Hand("Gu");// CPUの手
+    matchMapper.insertMatches(match);
+
+    ArrayList<Match> matches = matchMapper.selectAllByMatches();
+    model.addAttribute("matches", matches);
+
+    return "match.html";
+
+  }
 }
