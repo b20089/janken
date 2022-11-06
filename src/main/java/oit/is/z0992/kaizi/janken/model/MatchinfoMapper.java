@@ -27,7 +27,10 @@ public interface MatchinfoMapper {
   void insertMatchinfo(Matchinfo matchinfo);
 
   @Select("SELECT * from matchinfo")
-  ArrayList<Match> selectAllByMatchinfo();
+  ArrayList<Matchinfo> selectAllByMatchinfo();
+
+  @Select("SELECT * from matchinfo where isActive is true")
+  ArrayList<Matchinfo> selectByisActive();
 
   /**
    * DBのカラム名とjavaクラスのフィールド名が同じ場合はそのまま代入してくれる（大文字小文字の違いは無視される）

@@ -120,6 +120,10 @@ public class JankenController {
     ArrayList<Match> matches = matchMapper.selectAllByMatches();
     model.addAttribute("matches", matches);
 
+    ArrayList<Matchinfo> matchinfo = matchinfoMapper.selectByisActive();
+    model.addAttribute("matchinfo", matchinfo);
+    // 画面に渡す処理達
+
     return "janken.html";
   }
 
@@ -178,7 +182,7 @@ public class JankenController {
    *
    * @param param1
    * @param id
-   * @param model Thymeleafにわたすデータを保持するオブジェクト
+   * @param model  Thymeleafにわたすデータを保持するオブジェクト
    * @param prin
    * @return
    */
@@ -205,7 +209,7 @@ public class JankenController {
     // autowiredの存在を忘れていた．
     matchinfoMapper.insertMatchinfo(info);
 
-    ArrayList<Match> matchinfo = matchinfoMapper.selectAllByMatchinfo();
+    ArrayList<Matchinfo> matchinfo = matchinfoMapper.selectAllByMatchinfo();
     model.addAttribute("matchinfo", matchinfo);
     model.addAttribute("username", prin.getName());
 
