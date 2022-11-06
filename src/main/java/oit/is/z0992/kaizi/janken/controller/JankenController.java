@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import oit.is.z0992.kaizi.janken.model.Entry;
 import oit.is.z0992.kaizi.janken.model.Match;
 import oit.is.z0992.kaizi.janken.model.MatchMapper;
+import oit.is.z0992.kaizi.janken.model.Matchinfo;
+import oit.is.z0992.kaizi.janken.model.MatchinfoMapper;
 import oit.is.z0992.kaizi.janken.model.User;
 import oit.is.z0992.kaizi.janken.model.UserMapper;
 
@@ -34,6 +36,9 @@ public class JankenController {
 
   @Autowired
   MatchMapper matchMapper;
+
+  @Autowired
+  MatchinfoMapper matchinfoMapper;
   /**
    * work02part1というGETリクエストがあったら work02part1()を呼び出し，work02part1.htmlを返す
    */
@@ -166,6 +171,45 @@ public class JankenController {
     model.addAttribute("matches", matches);
 
     return "match.html";
+
+  }
+
+  /**
+   *
+   * @param param1
+   * @param id
+   * @param model Thymeleafにわたすデータを保持するオブジェクト
+   * @param prin
+   * @return
+   */
+  @GetMapping("/wait")
+  public String waitJanken(@RequestParam Integer param1, @RequestParam Integer id, ModelMap model, Principal prin) {
+    // グー：１，チョキ：２，パー：３
+    String te = null;
+    if (param1 == 1) {
+      te = "Gu";
+    } else if (param1 == 2) {
+      te = "Choki";
+    } else if (param1 == 3) {
+      te = "Pa";
+    }
+
+    User jibun = userMapper.selectByName(prin.getName());
+    Matchinfo info = new Matchinfo();
+    info.setUser1(jibun.getId());
+    info.setUser2(id);// CPU
+    info.setUser1Hand(te);
+    info.setIsActive(true);
+    // match.setUser2Hand("Gu");// matchinfoにはいらない
+
+    // autowiredの存在を忘れていた．
+    matchinfoMapper.insertMatchinfo(info);
+
+    ArrayList<Match> matchinfo = matchinfoMapper.selectAllByMatchinfo();
+    model.addAttribute("matchinfo", matchinfo);
+    model.addAttribute("username", prin.getName());
+
+    return "wait.html";
 
   }
 }
