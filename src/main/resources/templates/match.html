@@ -13,17 +13,16 @@
 
   <div th:each="aite,stat:${aite}" th:if="${username}">
     <h2>[[${username}]] V.S. [[${aite.name}]]</h2>
+
+    <p>
+      <!--th:を付けるの忘れてた(不可な文字エラー [/@%7B/wait/?param1=1&(id=${aite.id})} ])，?付けるの忘れてた(404)，-->
+      <a th:href="@{/wait/?param1=1&(id=${aite.id})}">ぐー</a>
+
+      <a th:href="@{/wait/?param1=2&(id=${aite.id})}">ちょき</a>
+
+      <a th:href="@{/wait/?param1=3&(id=${aite.id})}">ぱー</a>
+    </p>
   </div>
-
-  <p>
-  <div>
-    <a href="/fight/?param1=1">ぐー</a>
-
-    <a href="/fight/?param1=2">ちょき</a>
-
-    <a href="/fight/?param1=3">ぱー</a>
-  </div>
-  </p>
   <div th:if="${te}">
     <p>
       あなたの手　[[${te}]]
