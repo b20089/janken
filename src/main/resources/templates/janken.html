@@ -43,6 +43,19 @@
   </div>
   </p>
 
+  <p th:if="${matchinfo}">
+  <h2>アクティブな試合</h2>
+  <div th:each="matchinfo,stat:${matchinfo}">
+    <tr>
+      <!-- <td>Index:[[${stat.index}]]</td> -->
+      <td>Match: id [[${matchinfo.id}]]</td>
+      <td>user1:[[${matchinfo.user1}]]</td>
+      <td>user2:[[${matchinfo.user2}]]</td>
+      <td>isActive:[[${matchinfo.isActive}]]</td>
+    </tr>
+  </div>
+  </p>
+
   <p th:if="${matches}">
   <h2>試合結果</h2>
   <!--statはステータス変数
@@ -50,12 +63,11 @@
                     -->
   <div th:each="matches,stat:${matches}">
     <tr>
-      <!-- <td>Index:[[${stat.index}]]</td> -->
-      <td>ID:[[${matches.id}]]</td>
-      <td>ユーザ1:[[${matches.user1}]]</td>
-      <td>ユーザ2:[[${matches.user2}]]</td>
-      <td>ユーザ1の手:[[${matches.user1Hand}]]</td>
-      <td>ユーザ2の手:[[${matches.user2Hand}]]</td>
+      <td>id:[[${matches.id}]]</td>
+      <td>user1:[[${matches.user1}]]</td>
+      <td>user2:[[${matches.user2}]]</td>
+      <td>user1の手:[[${matches.user1Hand}]]</td>
+      <td>user2の手:[[${matches.user2Hand}]]</td>
     </tr>
   </div>
   </p>
